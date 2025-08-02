@@ -17,7 +17,7 @@ function App() {
   const [catalogo, setCatalogo] = useState([]);
   const [cargando, setCargando] = useState(true);
 
-  // Libros estáticos combinados de todas las categorías (sin API)
+
   const librosEstaticos = [
     ...librosCienciaFiccion,
     ...librosHistoria,
@@ -34,7 +34,7 @@ function App() {
         );
         const data = await res.json();
 
-        // Mapear los libros que vienen de la API
+        
         const librosAPI = data.docs.map((libro, index) => ({
           id: index + 1000,
           titulo: libro.title || "Sin título",
