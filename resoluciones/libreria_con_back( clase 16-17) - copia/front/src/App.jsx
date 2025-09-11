@@ -44,7 +44,7 @@ function App() {
         }));
 
       
-      setCatalogo([ ...librosBackData, ...librosAPI]);
+      setCatalogo([ ...librosBackData.data, ...librosAPI]);
     } catch (error) {
       console.error("Error al cargar libros de la API:", error);
 
@@ -57,9 +57,16 @@ function App() {
 }, []);
 
 
-  const agregarLibro = (nuevoLibro) => {
-    setCatalogo([...catalogo, { ...nuevoLibro, id: catalogo.length + 1 }]);
+ const agregarLibro = (nuevoLibro) => {
+  // Si no viene id del backend, usamos Date.now() temporalmente
+  const libroConId = {
+    ...nuevoLibro,
+    id: nuevoLibro.id || Date.now(),
   };
+  console.log(" Agregando libro al catálogo:", libroConId);
+  setCatalogo([...catalogo, libroConId]);
+};
+
 
   return (
     <LibroProvider value={{ catalogo, agregarLibro }}>

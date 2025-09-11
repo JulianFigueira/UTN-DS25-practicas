@@ -7,7 +7,7 @@ const BookCard = ({ titulo, autor, descripcion, imagen}) => {
     <div className="col">
       <div className="card h-100 shadow-sm custom-card">
         <img
-          src={`http://localhost:3000${imagen}`}
+          src={imagen|| "https://via.placeholder.com/150x200?text=Sin+imagen"}
           className="card-img-top"
           alt={titulo}
           style={{ height: "500px" }}

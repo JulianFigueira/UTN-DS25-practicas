@@ -16,7 +16,9 @@ export const createBookSchema=z.object({
    .min(1, 'La descripcion del libro es requerida')
    .max(300, 'La descripcion del libro no puede exceder 300 caracteres')
    .trim(),
-
+   
+  imagen: z.string().optional(),       // ✅ AGREGADO opcional
+  categoria: z.string().optional()
 
 });
 

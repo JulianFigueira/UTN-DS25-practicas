@@ -33,7 +33,7 @@ function FormularioAgregarLibro() {
       }
 
       const libroCreado = await res.json();
-      agregarLibro(libroCreado);
+      agregarLibro(libroCreado.data?.libro || libroCreado.data);
 
       setNuevoLibro({
         titulo: "",
