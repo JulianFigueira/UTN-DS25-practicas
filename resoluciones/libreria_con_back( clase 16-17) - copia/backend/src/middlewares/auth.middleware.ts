@@ -18,8 +18,7 @@ export function authenticate(req: Request, res: Response, next: NextFunction) {
  // 1. Obtener token del header
  const authHeader = req.headers.authorization;
  if (!authHeader || !authHeader.startsWith('Bearer ')) {
- return res.status(401).json({ success: false, error: 'Token no
-proporcionado' });
+ return res.status(401).json({ success: false, error: 'Token no proporcionado' });
  }
  const token = authHeader.split(' ')[1];
  // 2. Verificar token
@@ -39,7 +38,6 @@ proporcionado' });
  res.status(401).json({ success: false, error: 'Token inválido' });
  }
 }
-
 // Autorización: Middleware para verificar roles
 export function authorize(...roles: string[]) {
  return (req: Request, res: Response, next: NextFunction) => {

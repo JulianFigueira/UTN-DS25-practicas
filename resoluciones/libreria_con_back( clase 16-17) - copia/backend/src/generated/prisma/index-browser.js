@@ -139,6 +139,12 @@ exports.Prisma.FormularioScalarFieldEnum = {
   sexo: 'sexo'
 };
 
+exports.Prisma.UserScalarFieldEnum = {
+  id: 'id',
+  mail: 'mail',
+  contrasena: 'contrasena'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -152,7 +158,8 @@ exports.Prisma.QueryMode = {
 
 exports.Prisma.ModelName = {
   Book: 'Book',
-  Formulario: 'Formulario'
+  Formulario: 'Formulario',
+  User: 'User'
 };
 
 /**

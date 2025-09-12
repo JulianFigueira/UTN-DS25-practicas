@@ -1,18 +1,20 @@
 import prisma from '../config/prisma';
 import bcrypt from 'bcrypt';
-import { CreateUserRequest , UpdateUserRequest , UserData } from
-'../types/user.types' ;
-export async function getAllUsers(limit: number = 10): Promise<UserData[]> {
+import { User , CreateUser, UserResponse, UserListResponse } from
+'../types/user' ;
+
+export async function getAllUsers(limit: number = 10): Promise<UserResponse[]> {
  const users = await prisma.user.findMany({
  orderBy: { id: "asc" },
  take: limit,
- omit: { password: true }
+ omit: { contrasena: true }
  });
  return users;
 }
-export async function getUserById(id: number): Promise<UserData> {
+
+export async function getUserById(id: number): Promise<UserResponse> {
  const user = await prisma.user.findUnique(
- { where: { id }, omit: { password: true }});
+ { where: { id }, omit: { contrasena: true }});
  if (!user) {
  const error = new Error('Usuario no encontrado') as any;
  error.statusCode = 404;
@@ -20,50 +22,28 @@ export async function getUserById(id: number): Promise<UserData> {
  }
  return user;
 }
-export async function createUser(data: CreateUserRequest): Promise<UserData> {
+export async function createUser(data: CreateUser): Promise<UserResponse> {
  // 1. Verificar si existe
- const exists = await prisma.user.findUnique({ where: { email: data.email }});
+ const exists = await prisma.user.findUnique({ where: { mail: data.mail }});
  if (exists) {
  const error = new Error('Email ya registrado') as any;
  error.statusCode = 409;
  throw error;
  }
  // 2. Hashear password
- const hashedPassword = await bcrypt.hash(data.password, 10);
+ const hashedPassword = await bcrypt.hash(data.contrasena, 10);
  // 3. Crear usuario
  const user = await prisma.user.create({
  data: {
  ...data,
- password: hashedPassword
+ contrasena: hashedPassword
  },
- omit: { password: true }
+ omit: { contrasena: true }
  });
  return user;
 }
 
-export async function updateUser(id: number, data: UpdateUserRequest):
-Promise<UserData> {
- try {
- const updateData: Partial<UpdateUserRequest> = { ...data };
- if (data.password) {
- updateData.password = await bcrypt.hash(data.password, 10);
- } else {
- delete (updateData as any).password;
- }
- return await prisma.user.update({
- where: { id },
- data: updateData,
- omit: { password: true }
- });
- } catch (e: any) {
- if (e.code === 'P2025') {
- const error = new Error('Usuario no encontrado') as any;
- error.statusCode = 404;
- throw error;
- }
- throw e;
- }
-}
+
 export async function deleteUser(id: number): Promise<void> {
  try {
  await prisma.user.delete({ where: { id } });

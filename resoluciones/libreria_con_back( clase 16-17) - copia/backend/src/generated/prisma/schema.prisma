@@ -32,3 +32,9 @@ model Formulario {
   contraseña String
   sexo        Boolean
 }
+
+model User {
+  id         Int    @id @default(autoincrement())
+  mail       String @unique
+  contrasena String
+}
