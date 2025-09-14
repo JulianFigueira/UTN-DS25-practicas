@@ -2,6 +2,12 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom" ;
 import { setToken } from "../helpers/auth" ;
 
+
+//MAILS DE PRUEBA REGISTRADOS.
+
+//julian@example.com. Contra: Prueba1
+//ana@example.com. Contra: Secreta2
+
  function LoginPage () {
  const navigate = useNavigate ();
  const [email, setEmail ] = useState ("");
@@ -9,15 +15,22 @@ import { setToken } from "../helpers/auth" ;
  async function handleSubmit (e) {
  e.preventDefault ();
  try {
- const res = await fetch("http://localhost:3000/api/auth/login" , {
- method: "POST",
- headers: { "Content-Type" : "application/json" },
- body: JSON.stringify ({ email, password })
- });
- if (!res.ok) throw new Error("Error en login" );
- const { data } = await res.json();
- setToken(data.token);
- navigate ("/catalog" );
+ const res = await fetch("http://localhost:3000/api/auth/login", {
+  method: "POST",
+  headers: { "Content-Type": "application/json" },
+  body: JSON.stringify({ email, password }),
+});
+
+const json = await res.json();
+
+if (!res.ok) {
+  alert(json.error || "Login fallido");
+  return;
+}
+
+setToken(json.data.token);
+navigate("/catalog");
+
  } catch (err) {
  alert("Login fallido" );
  }

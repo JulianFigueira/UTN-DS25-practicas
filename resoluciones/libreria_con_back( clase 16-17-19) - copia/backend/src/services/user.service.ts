@@ -7,14 +7,23 @@ export async function getAllUsers(limit: number = 10): Promise<UserResponse[]> {
  const users = await prisma.user.findMany({
  orderBy: { id: "asc" },
  take: limit,
- omit: { contrasena: true }
+ select: {
+      id: true,
+      mail: true,
+      // contrasena: false → no se incluye
+    }
  });
  return users;
 }
 
 export async function getUserById(id: number): Promise<UserResponse> {
- const user = await prisma.user.findUnique(
- { where: { id }, omit: { contrasena: true }});
+ const user = await prisma.user.findUnique({ 
+    where: { id }, 
+  select: {
+      id: true,
+      mail: true,
+      // contrasena: false → no se incluye
+    } });
  if (!user) {
  const error = new Error('Usuario no encontrado') as any;
  error.statusCode = 404;
@@ -22,6 +31,8 @@ export async function getUserById(id: number): Promise<UserResponse> {
  }
  return user;
 }
+
+
 export async function createUser(data: CreateUser): Promise<UserResponse> {
  // 1. Verificar si existe
  const exists = await prisma.user.findUnique({ where: { mail: data.mail }});
@@ -35,10 +46,13 @@ export async function createUser(data: CreateUser): Promise<UserResponse> {
  // 3. Crear usuario
  const user = await prisma.user.create({
  data: {
- ...data,
- contrasena: hashedPassword
+      mail: data.mail,
+      contrasena: hashedPassword,
  },
- omit: { contrasena: true }
+   select: {
+      id: true,
+      mail: true,
+    }
  });
  return user;
 }
