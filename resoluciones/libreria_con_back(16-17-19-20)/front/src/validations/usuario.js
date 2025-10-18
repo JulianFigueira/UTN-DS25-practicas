@@ -10,10 +10,11 @@ export const createUserSchema = yup.object().shape({
 
   password: yup
     .string()
-    .required('Minimo 8 caracteres')
-    .min(8, 'Minimo 8 caracteres')
-    .matches(/[A-Z]/, 'Debe contener al menos una mayuscula')
-    .matches(/[0-9]/, 'Debe contener al menos un numero'),
+    .required('Password invalida')
+    .test('password-check', 'Password invalida', (value) => {
+      if (!value) return false; 
+   
+    }),
 
   name: yup
     .string()
