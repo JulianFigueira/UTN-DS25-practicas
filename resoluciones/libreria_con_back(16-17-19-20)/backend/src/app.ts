@@ -29,3 +29,5 @@ app.use(handlerError);
 app.listen(PORT, ()=>{
     console.log(`Server running on port ${PORT}`);
 });
+
+export {app}

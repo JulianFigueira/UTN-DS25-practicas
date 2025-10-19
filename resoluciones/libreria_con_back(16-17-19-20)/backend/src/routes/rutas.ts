@@ -1,6 +1,6 @@
 import {Router} from 'express';
 import * as bookController from '../controllers/controller';
-import { createBookSchema } from '../validations/formulario.validationes';
+import { createFormularioSchema } from '../validations/formulario.validationes';
 import {validate} from '../middlewares/validation.middleware';
 
 
