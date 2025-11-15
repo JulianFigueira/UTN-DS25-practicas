@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import BookCard from "./BookCard";
+import BookCard from "./bookcard";
 import "../App.css";
 import useLibros from "../hooks/hook";
 import 'bootstrap/dist/css/bootstrap.min.css';
