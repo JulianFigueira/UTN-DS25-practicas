@@ -5,6 +5,10 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { createUserSchema } from "../validations/usuario"; // Ajusta la ruta según tu estructura
 
+//mails de prueba.  julian@example.com contraseña:1234
+//                  ana@example.com    contraseña:4321
+
+
 function LoginPage() {
   const navigate = useNavigate();
 
