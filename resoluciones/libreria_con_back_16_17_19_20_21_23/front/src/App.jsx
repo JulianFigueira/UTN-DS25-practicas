@@ -17,9 +17,9 @@ function App() {
   const cargarLibros = async () => {
     try {
       setCargando(true);
-
+      const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || '';
      
-      const resBack = await fetch("http://localhost:3000/api/books");
+      const resBack = await fetch(`${API_BASE_URL}/api/books`); 
       const librosBackData = await resBack.json();
       
       const res = await fetch(
