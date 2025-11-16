@@ -21,8 +21,9 @@ function FormularioAgregarLibro() {
 
   // ✅ submit del formulario
   const onSubmit = async (data) => {
+    const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || '';
     try {
-      const res = await fetch("http://localhost:3000/api/books", {
+      const res = await fetch(`${API_BASE_URL}/api/books`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data),
