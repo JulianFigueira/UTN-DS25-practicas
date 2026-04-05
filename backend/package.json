@@ -6,7 +6,6 @@
     "dev": "ts-node-dev --respawn --transpile-only src/app.ts",
     "build": "tsc && prisma generate",
     "start": "node dist/app.js",
-    "postinstall": "prisma generate",
     "seed": "ts-node prisma/seed.ts",
     "test": "jest",
     "test:watch": "jest --watch",
